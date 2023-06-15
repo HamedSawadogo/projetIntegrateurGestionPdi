@@ -8,24 +8,22 @@ require_once ("src/db/Connection.php");
 abstract class Utilisateur
 {
   protected string  $username;
-  protected string $password;
-  protected string $type;
-  protected  $connection;
-
+  protected string  $password;
+  protected string  $type;
+  protected \PDO    $connection;
     /**
      * @param string $username
      * @param string $password
      */
     public function __construct(string $username, string $password)
     {
+        $connect=new Connection();
+        $this->connection=$connect->getConnection();
         $this->username = $username;
         $this->password = $password;
-        $this->connection=Connection::getConnection();
     }
-
     //============================abstrac==========================================//
     public  abstract  function getUserType():string;
-
     /**
      * @param Utilisateur $utilisateur
      * @return void
@@ -39,7 +37,6 @@ abstract class Utilisateur
        // $query->bindParam(3,$this->getUserType(),PDO::PARAM_STR);
         $query->execute();
     }
-
     /**
      * @param int $userId
      * @return void

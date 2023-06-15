@@ -4,6 +4,9 @@ require_once ("src/model/Utilisateur.php");
 require_once ("src/interfaces/AgentEnregistrementInterface.php");
 require_once ("src/managers/PdiManager.php");
 
+/**
+ * agent d'enregistrement  qui enregistres les personnes  déplacés internes
+ */
 class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInterface
 {
     private PdiManager $manager;

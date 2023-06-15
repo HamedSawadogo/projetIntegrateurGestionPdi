@@ -5,9 +5,9 @@ require_once("src/db/Connection.php");
 class PdiManager implements PdiMetierInterface
 {
 
-    private Connection $connection;
+    private \PDO $connection;
 
-    public function __construct(Connection $connection)
+    public function __construct(\PDO $connection)
     {
         $this->connection = $connection;
     }

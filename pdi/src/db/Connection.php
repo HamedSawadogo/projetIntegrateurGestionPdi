@@ -5,7 +5,7 @@
  */
 class Connection{
 
-   private  static ?PDO $connection=null;
+   private  ?PDO $connection=null;
    private const  HOST="localhost";
    private  const USER="root";
    private  const PASSWORD="";
@@ -13,10 +13,10 @@ class Connection{
     /**
      * constructeur privé
      */
-   private function __construct(){
+   public function __construct(){
       try {
-           self::$connection=new  \PDO("mysql:host=".self::HOST.";dbname=".self::DBNAME."",self::USER,self::PASSWORD);
-           self::$connection->setAttribute(PDO::ERRMODE_EXCEPTION,PDO::ATTR_ERRMODE);
+           $this->connection=new  PDO("mysql:host=".self::HOST.";dbname=".self::DBNAME."",self::USER,self::PASSWORD);
+           $this->connection->setAttribute(PDO::ERRMODE_EXCEPTION,PDO::ATTR_ERRMODE);
       } catch (\Exception $e) {
          die("Erreur:  ".$e->getMessage());
       }
@@ -25,10 +25,10 @@ class Connection{
     * onbtenir la connection a la base de donnée
     * @return void
     */
-   public  static function getConnection():?PDO{
-      if(self::$connection==null){
-          self::$connection=new self();
+   public  function getConnection():?PDO{
+      if(is_null($this->connection)){
+          $this->connection=new Connection();
       }
-      return self::$connection;
+      return $this->connection;
   }
 }
