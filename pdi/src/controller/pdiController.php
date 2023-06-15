@@ -1,4 +1,7 @@
 <?php
+
+use managers\PdiManager;
+
 require_once ("../model/PdiManager.php");
 
 

@@ -6,11 +6,10 @@ class Besoin
    private int $id;
    private  int $idPdi;
 
-   public  function  __construct()
+   public  function  __construct(string  $besoin)
    {
-
+       $this->besoin=$besoin;
    }
-
     /**
      * @return string
      */

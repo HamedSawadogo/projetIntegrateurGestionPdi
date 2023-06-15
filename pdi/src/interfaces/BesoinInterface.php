@@ -2,7 +2,7 @@
 
 interface BesoinInterface
 {
-    public  function  addBesoin(Besoin  $besoin):void;
+    public  function  addBesoin(int $pdiId,string $besoin):void;
     public  function  getPdiByBesoin(string  $besoinLibele):int;
 
 }

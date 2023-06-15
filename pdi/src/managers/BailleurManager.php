@@ -1,15 +1,14 @@
 <?php
 
-require_once ("src/interfaces/BailleurInterface.php");
+require_once("src/interfaces/BailleurInterface.php");
 
-class BailleurManager implements  BailleurInterface
+class BailleurManager implements BailleurInterface
 {
-    private  \PDO $connection;
-   public  function  __construct(\PDO $connection)
-   {
-       $this->connection=$connection;
-
-   }
+    private \PDO $connection;
+    public function __construct(\PDO $connection)
+    {
+        $this->connection = $connection;
+    }
     /**
      * @param Bailleur $bailleur
      * @return void
@@ -20,27 +19,28 @@ class BailleurManager implements  BailleurInterface
         /**
          * inserer un bailleur dans la base de donnée
          */
-        $sql="insert into  bailleur(nom,type_bailleur) values(?,?)";
-        $query=$this->connection->prepare($sql);
-        $query->execute(array($bailleur->getNom(),$bailleur->getTypeBailleur()));
+        $sql = "insert into  bailleur(nom,type_bailleur) values(?,?)";
+        $query = $this->connection->prepare($sql);
+        $query->execute(array($bailleur->getNom(), $bailleur->getTypeBailleur()));
 
         /**
          * l'identifiant du bailleur enregistré
          *
          */
-        $bailleurId=$this->connection->lastInsertId();
+        $bailleurId = $this->connection->lastInsertId();
         /**
          * inserer son adresse dans la base de donnée
          */
-        $sqlAdresse="insert into adresse(email,telephone,bailleur_id) 
+        $sqlAdresse = "insert into adresse(email,telephone,bailleur_id) 
         values(?,?,?)";
-        $queryAdress=$this->connection->prepare($sqlAdresse);
+        $queryAdress = $this->connection->prepare($sqlAdresse);
         $queryAdress->execute([
             $bailleur->getAdresse()->getEmail(),
             $bailleur->getAdresse()->getTelephone(),
             $bailleurId
         ]);
     }
+
     /**
      * @param int $id
      * @return void
@@ -48,15 +48,16 @@ class BailleurManager implements  BailleurInterface
      */
     public function deleteBailleurById(int $id): void
     {
-        if($id>0){
-            $sql="delete from bailleur where id=:id";
-            $query=$this->connection->prepare($sql);
-            $query->bindParam(":id",$id,PDO::PARAM_INT);
+        if ($id > 0) {
+            $sql = "delete from bailleur where id=:id";
+            $query = $this->connection->prepare($sql);
+            $query->bindParam(":id", $id, PDO::PARAM_INT);
             $query->execute();
-        }else{
+        } else {
             throw  new \exceptions\InvalidIdentifiantException();
         }
     }
+
     /**
      * @param int $id
      * @return void
@@ -65,12 +66,12 @@ class BailleurManager implements  BailleurInterface
      */
     public function rechercherBailleurById(int $id)
     {
-        if($id>0){
-            $sql="select * from bailleur where id=?";
-            $query=$this->connection->prepare($sql);
+        if ($id > 0) {
+            $sql = "select * from bailleur where id=?";
+            $query = $this->connection->prepare($sql);
             $query->execute([$id]);
             return $query->fetch();
-        }else{
+        } else {
             throw  new \exceptions\InvalidIdentifiantException();
         }
 

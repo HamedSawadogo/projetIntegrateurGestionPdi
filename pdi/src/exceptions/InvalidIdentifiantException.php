@@ -2,7 +2,8 @@
 
 namespace exceptions;
 
-class InvalidIdentifiantException
-{
 
+class InvalidIdentifiantException extends \Exception
+{
+   protected $message="une erreur est survenu identifiant invalide";
 }
