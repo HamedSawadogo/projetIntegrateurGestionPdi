@@ -63,8 +63,6 @@ class PdiManager implements  PdiMetierInterface {
           $pdi->getDateNais(),
           $pdi->getActivite()
       ]);
-      $query->execute();
-
    }
     /**
      * @param int $id
@@ -79,7 +77,6 @@ class PdiManager implements  PdiMetierInterface {
         $query->execute();
         return  $query->fetch(PDO::FETCH_ASSOC);
     }
-
     /**
      * afficher la liste des personnes déplacés Internes Femmes
      * @return int
@@ -118,7 +115,6 @@ class PdiManager implements  PdiMetierInterface {
         $res=$query->fetch();
         return  $res['nombre_personnes_mineures'];
     }
-
     /**
      * @param int $id
      * @return void
@@ -131,7 +127,6 @@ class PdiManager implements  PdiMetierInterface {
        $query->bindParam(":id_pdi",$id);
        $query->execute();
     }
-
     /**
      * @return array
      * renvoyer la liste des PDI

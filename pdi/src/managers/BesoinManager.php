@@ -11,15 +11,28 @@ class BesoinManager implements  BesoinInterface
        $this->connection=$connection;
    }
     /**
-     * @param Besoin $besoin
+     * @param int $pdiId
+     * @param string $besoin
      * @return void
-     * ajouter un  bésoin a la liste des bésoins
+     * ajouter un bésoin a un PDI
      */
-    public function addBesoin(Besoin $besoin):void
-    {
-        $sql="insert into besoin(libele) values(?)";
+    public  function  addBesoin(int $pdiId,string $besoin):void{
+        $sql="select * from besoin where UPPER(nom)=?";
         $query=$this->connection->prepare($sql);
-        $query->execute([$besoin->getBesoin()]);
+        $query->bindParam(1,$besoin,PDO::PARAM_STR);
+        $query->execute();
+        $result=$query->execute();
+        
+        if($result){
+            $besoinId=$this->connection->lastInsertId();
+            var_dump($besoinId);
+            $sqlbesoin="insert into besoin_pdi(id_besoin,id_pdi)
+           values(?,?)";
+            $besoinQuery=$this->connection->prepare($sqlbesoin);
+            $besoinQuery->bindParam(1,$besoinId);
+            $besoinQuery->bindParam(2,$pdiId);
+            $besoinQuery->execute();
+        }
     }
     /**
      * @param string $besoinLibele
