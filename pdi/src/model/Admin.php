@@ -19,13 +19,13 @@ class Admin extends Utilisateur implements AdminInterfaceMetier
      */
     public function addUser(Utilisateur $user): void
     {
-        $sql="insert into user(username,password,type) values (?,?,?)";
+        /** $sql="insert into user(username,password,type) values (?,?,?)";
         $query=$this->connection->prepare($sql);
         $query->execute([
             $user->getUsername(),
             $this->hashPassword(),
             $user->getUserType()
-        ]);
+        ]);**/
     }
     /**
      * @param int $userId
@@ -33,10 +33,10 @@ class Admin extends Utilisateur implements AdminInterfaceMetier
      * supprumier un utilisateur
      */
     public  function  deleteUser(int $id):void{
-        $sql="delete from user where id=?";
+       /** $sql="delete from user where id=?";
         $query=$this->connection->prepare($sql);
         $query->bindParam(1,$id,PDO::PARAM_INT);
-        $query->execute();
+        $query->execute();**/
     }
     /**
      * @return void
@@ -44,14 +44,14 @@ class Admin extends Utilisateur implements AdminInterfaceMetier
      */
     public function getUserList(): array
     {
-        $sql="select * from user";
+       /** $sql="select * from user";
         $query=$this->connection->prepare($sql);
         $query->execute();
         $usersList=[];
         while ($data=$query->fetch()){
             $usersList[]=$data;
         }
-        return $usersList;
+        return $usersList;**/
     }
     /**
      * @param int $id
@@ -60,10 +60,10 @@ class Admin extends Utilisateur implements AdminInterfaceMetier
      */
     public function getUserById(int $id)
     {
-        $sql="select * from user where id=?";
+        /**$sql="select * from user where id=?";
         $query=$this->connection->prepare($sql);
         $query->bindParam(1,$id,PDO::PARAM_INT);
         $query->execute();
-        return $query->fetch(PDO::FETCH_ASSOC);
+        return $query->fetch(PDO::FETCH_ASSOC);**/
     }
 }

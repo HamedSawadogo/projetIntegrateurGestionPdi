@@ -13,6 +13,7 @@ class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInt
     public  function  __construct(string $username, string $password)
     {
         parent::__construct($username, $password);
+        $this->manager=new PdiManager();
     }
     /**
      * @return string
@@ -30,7 +31,7 @@ class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInt
      */
     public function addPDI(PDI $pdi): void
     {
-        $this->manager->addPDI($pdi);
+        $this->manager->addEntity($pdi);
     }
 
     /**
@@ -40,7 +41,7 @@ class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInt
      */
     public function deletePDI(int $id): void
     {
-        $this->manager->deletePDI($id);
+        $this->manager->deleteEntityByID($id);
     }
 
     /**
@@ -50,7 +51,7 @@ class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInt
      */
     public function getPdiByID(int $id)
     {
-       return  $this->manager->getPdiByID($id);
+       return  $this->manager->getEntityByID($id);
     }
 
     /**
@@ -59,6 +60,6 @@ class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInt
      */
     public function getPdiList(): array
     {
-        return  $this->manager->getPdiList();
+        return  $this->manager->getEntityList();
     }
 }

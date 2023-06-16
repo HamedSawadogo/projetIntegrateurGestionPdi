@@ -10,13 +10,19 @@
 </head>
 
 <body>
-   <div class="container w-25 mt-4">
+   <div class="container w-25 mt-4 p-2" style="border:1px solid #333">
       <h3>CONNECTION</h3>
-      <form method="POST" action="../../indexTest.php">
+
+      <?php  if(isset($_GET['mess'])&&$_GET['mess']=="err") :?>
+      <div class="alert alert-danger" role="alert">
+         login ou mot de passe incorect!
+      </div>
+      <?php endif;?>
+      <form method="POST" action="../../indexTest.php?action=post">
          <!-- utilisateur -->
          <div class="form-group">
             <label for="username">utilisateur</label>
-            <input type="text" autocomplete="off" name="username" class="form-control" id="username"
+            <input type="text" value="root" autocomplete="off" name="username" class="form-control" id="username"
                placeholder="nom d'utilisateur">
 
             <!-- mot de passe -->
@@ -28,10 +34,10 @@
             <!-- catégorie d'utilisateur -->
             <label for="role">Role</label>
             <select name="role" class="form-select form-select-sm" aria-label=".form-select-sm example">
-               <option value="Admin">Admin</option>
-               <option value="enregistrement">Agent Gestionnaire</option>
-               <option value="gestion">Agente Administration</option>
-               <option value="decideur">Decideur</option>
+               <option value="ADMIN">ADMIN</option>
+               <option value="AGENT_ENREGISTREMENT">AGENT GESTIONNAIRE</option>
+               <option value="AGENT_GESTION">AGENT ADMIN</option>
+               <option value="DECIDEUR">DECIDEUR</option>
             </select>
             <button type="submit" class="btn btn-success mt-2">Se connecter</button>
       </form>

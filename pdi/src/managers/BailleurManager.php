@@ -1,35 +1,23 @@
 <?php
-
+require_once ("src/interfaces/ManagementInterface.php");
 require_once("src/interfaces/BailleurInterface.php");
 require_once ("AbstractManager.php");
 
-class BailleurManager extends AbstractManager implements BailleurInterface
+class BailleurManager extends AbstractManager  implements ManagementInterface
 {
-   public function __construct()
-   {
-   }
-    /**
-     * @param $montant
-     * @param string $secteur
-     * @return void
-     */
-    public  function  addFinancement($montant,string $secteur){
 
-
+    public function __construct()
+    {
     }
-    /**
-     * @param Bailleur $bailleur
-     * @return void
-     * ajouter un PDI dans la base de donnée et son adresee
-     */
-    public function addBailleur(Bailleur $bailleur): void
+
+    public function addEntity($entity): void
     {
         /**
          * inserer un bailleur dans la base de donnée
          */
         $sql = "insert into  bailleur(nom,type_bailleur) values(?,?)";
         $query = $this->connection->prepare($sql);
-        $query->execute(array($bailleur->getNom(), $bailleur->getTypeBailleur()));
+        $query->execute(array($entity->getNom(), $entity->getTypeBailleur()));
 
         /**
          * l'identifiant du bailleur enregistré
@@ -43,18 +31,16 @@ class BailleurManager extends AbstractManager implements BailleurInterface
         values(?,?,?)";
         $queryAdress = $this->connection->prepare($sqlAdresse);
         $queryAdress->execute([
-            $bailleur->getAdresse()->getEmail(),
-            $bailleur->getAdresse()->getTelephone(),
+            $entity->getAdresse()->getEmail(),
+            $entity->getAdresse()->getTelephone(),
             $bailleurId
         ]);
     }
 
     /**
-     * @param int $id
-     * @return void
-     * supprimer un  bailleur de la base de donnée
+     * @throws \exceptions\InvalidIdentifiantException
      */
-    public function deleteBailleurById(int $id): void
+    public function deleteEntityByID(int $id): void
     {
         if ($id > 0) {
             $sql = "delete from bailleur where id=:id";
@@ -67,12 +53,9 @@ class BailleurManager extends AbstractManager implements BailleurInterface
     }
 
     /**
-     * @param int $id
-     * @return void
      * @throws \exceptions\InvalidIdentifiantException
-     * rechercher un bailleur par son identifiant
      */
-    public function rechercherBailleurById(int $id)
+    public function getEntityByID(int $id)
     {
         if ($id > 0) {
             $sql = "select * from bailleur where id=?";
@@ -82,6 +65,10 @@ class BailleurManager extends AbstractManager implements BailleurInterface
         } else {
             throw  new \exceptions\InvalidIdentifiantException();
         }
+    }
 
+    public function getEntityList(): array
+    {
+        return  [];
     }
 }

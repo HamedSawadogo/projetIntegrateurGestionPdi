@@ -1,13 +1,14 @@
 <?php
-require_once("../db/Connection.php");
+require_once("src/db/Connection.php");
 
 abstract class AbstractManager
 {
-    protected  \PDO $connection;
+    protected  PDO $connection;
     public  function  __construct()
     {
-        $connect=new \Connection();
+        $connect=new Connection();
         $this->connection=$connect->getConnection();
+        var_dump($this->connection);
     }
 
 }

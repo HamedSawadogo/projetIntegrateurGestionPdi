@@ -2,7 +2,7 @@
 require_once("src/interfaces/BesoinInterface.php");
 require_once("src/db/Connection.php");
 
-class BesoinManager implements BesoinInterface
+class BesoinManager implements ManagementInterface
 {
     private \PDO $connection;
 
