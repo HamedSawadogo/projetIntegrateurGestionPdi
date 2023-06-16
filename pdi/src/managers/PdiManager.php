@@ -1,17 +1,16 @@
 <?php
+
 require_once("src/interfaces/PdiMetierInterface.php");
 require_once("src/db/Connection.php");
+require_once("src/model/PDI.php");
+require_once ("AbstractManager.php");
 
-class PdiManager implements PdiMetierInterface
+class PdiManager extends AbstractManager implements PdiMetierInterface
 {
 
-    private \PDO $connection;
-
-    public function __construct(\PDO $connection)
-    {
-        $this->connection = $connection;
-    }
-
+     public function __construct()
+     {
+     }
     //afficher le nombre de Pdi Par region
     public function afficherPdiByRegions(): array
     {
@@ -29,7 +28,6 @@ class PdiManager implements PdiMetierInterface
         }
         return $dataArray;
     }
-
     /**
      * @param string $origine
      * @return mixed
@@ -141,7 +139,6 @@ class PdiManager implements PdiMetierInterface
         $query->bindParam(":id_pdi", $id);
         $query->execute();
     }
-
     /**
      * @return array
      * renvoyer la liste des PDI
@@ -151,7 +148,24 @@ class PdiManager implements PdiMetierInterface
         $sql = "select * from pdi";
         $query = $this->connection->prepare($sql);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        $pdiObjList=[];
+
+        while ($pdi=$query->fetch()) {
+            $pdiObjList[]=new PDI(
+                $pdi['nom'],
+                $pdi['prenom'],
+                $pdi['date_naiss'],
+                $pdi['lieu_origine'],
+                $pdi['sexe'],
+                $pdi['nationalite'],
+                $pdi['activite'],
+                $pdi['localisation'],
+                $pdi['email'],
+                $pdi['telephone']
+            );
+        }
+
+        return $pdiObjList;
     }
 
     /**

@@ -1,13 +1,21 @@
 <?php
 
 require_once("src/interfaces/BailleurInterface.php");
+require_once ("AbstractManager.php");
 
-class BailleurManager implements BailleurInterface
+class BailleurManager extends AbstractManager implements BailleurInterface
 {
-    private \PDO $connection;
-    public function __construct(\PDO $connection)
-    {
-        $this->connection = $connection;
+   public function __construct()
+   {
+   }
+    /**
+     * @param $montant
+     * @param string $secteur
+     * @return void
+     */
+    public  function  addFinancement($montant,string $secteur){
+
+
     }
     /**
      * @param Bailleur $bailleur

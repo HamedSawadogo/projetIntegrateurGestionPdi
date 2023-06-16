@@ -13,7 +13,6 @@ class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInt
     public  function  __construct(string $username, string $password)
     {
         parent::__construct($username, $password);
-        $this->manager=new PdiManager($this->connection);
     }
     /**
      * @return string
