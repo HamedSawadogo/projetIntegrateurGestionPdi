@@ -1,16 +1,9 @@
 <?php
-require_once("src/interfaces/BesoinInterface.php");
 require_once("src/db/Connection.php");
+require_once ("AbstractManager.php");
 
-class BesoinManager implements ManagementInterface
+class BesoinManager  extends  AbstractManager
 {
-    private \PDO $connection;
-
-    public function __construct(\PDO $connection)
-    {
-        $this->connection = $connection;
-    }
-
     /**
      * @param int $pdiId
      * @param string $besoin
@@ -37,20 +30,31 @@ class BesoinManager implements ManagementInterface
             $besoinQuery->execute();
         }
     }
-
     /**
      * @param string $besoinLibele
      * @return int
-     * incomplet
+     * afficher le nombre de PDI par besoin
      */
-    public function getPdiByBesoin(string $besoinLibele): int
+    public function getBesoinsListByPdi(): array
     {
-        $sql = "select count(besoin_pdi.id_pdi) as total from pdi,besoin,besoin_pdi 
-        where besoin_pdi.id_pdi=pdi.id_besoin
-        AND besoin.nom=?";
+        $sql = "select count(*) as total,b.nom  from pdi p,besoin b,besoin_pdi  bp
+        where bp.id_pdi=p.id_pdi AND bp.id_besoin=b.id
+        GROUP BY  b.nom";
+
         $query = $this->connection->prepare($sql);
-        $query->execute([$besoinLibele]);
-        return 0;
+        $query->execute();
+        return $query->fetch();
     }
 
+    /**
+     * @return array
+     * envoyer la liste des bésoins
+     */
+    public function getEntityList(): array
+    {
+        $sql="select * from besoin";
+        $query=$this->connection->prepare($sql);
+        $query->execute();
+        return  $query->fetchAll();
+    }
 }

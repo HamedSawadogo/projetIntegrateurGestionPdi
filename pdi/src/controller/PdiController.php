@@ -3,7 +3,6 @@ require_once ("src/managers/PdiManager.php");
 
 class PdiController
 {
-
     private  PdiManager $manager;
     public function __construct()
     {

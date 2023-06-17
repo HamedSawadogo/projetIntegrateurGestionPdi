@@ -1,7 +1,7 @@
 <?php
 session_start();
-$_SESSION['username']=$_POST['username'];
 
+var_dump($_SESSION['username']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +14,7 @@ $_SESSION['username']=$_POST['username'];
 
 <body>
 
-   <h1>Bienvenu! <?=$_SESSION['username'];?></h1>
-   <a href="file.php">demander a file s'il te connais</a>
+   <h1>File Bienvenu! <?php echo $_SESSION['username']; ?></h1>
 </body>
 
 </html>

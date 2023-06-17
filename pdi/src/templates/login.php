@@ -8,12 +8,11 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
    <title>connection</title>
 </head>
-
 <body>
    <div class="container w-25 mt-4 p-2" style="border:1px solid #333">
       <h3>CONNECTION</h3>
 
-      <?php  if(isset($_GET['mess'])&&$_GET['mess']=="err") :?>
+      <?php  if(isset($_GET['mess']) and $_GET['mess']=="err") :?>
       <div class="alert alert-danger" role="alert">
          login ou mot de passe incorect!
       </div>
@@ -24,7 +23,6 @@
             <label for="username">utilisateur</label>
             <input type="text" value="root" autocomplete="off" name="username" class="form-control" id="username"
                placeholder="nom d'utilisateur">
-
             <!-- mot de passe -->
             <div class="form-group">
                <label for="exampleInputPassword1">mot de passe</label>

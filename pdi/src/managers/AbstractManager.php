@@ -8,7 +8,6 @@ abstract class AbstractManager
     {
         $connect=new Connection();
         $this->connection=$connect->getConnection();
-        var_dump($this->connection);
     }
 
 }

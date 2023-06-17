@@ -1,5 +1,4 @@
 <?php
-
 require_once("src/interfaces/PdiMetierInterface.php");
 require_once("src/model/PDI.php");
 require_once ("AbstractManager.php");

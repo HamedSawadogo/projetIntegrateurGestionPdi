@@ -1,6 +1,3 @@
 <?php
 
-$name="";
-$nameHashed=hash("sha256",$name);
-
-var_dump($nameHashed);
+require_once ("src/librairies/autoload.php");
