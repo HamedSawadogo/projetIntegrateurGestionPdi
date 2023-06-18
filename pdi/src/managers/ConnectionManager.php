@@ -1,10 +1,10 @@
 <?php
 
-require_once ("src/db/Connection.php");
+require_once("src/db/Connection.php");
 
 class ConnectionManager
 {
-    private static  $connection;
+    private static $connection;
 
     public function __construct()
     {
@@ -12,7 +12,7 @@ class ConnectionManager
         self::$connection=$connect->getConnection();
     }
 
-     public  function  connectUser(string $username,string $password,string $role):bool
+     public function connectUser(string $username, string $password, string $role): bool
      {
          if (isset($username) && isset($password) && isset($role)) {
              $username = htmlspecialchars($username);
@@ -37,17 +37,19 @@ class ConnectionManager
          return  false;
      }
 
-    public  function  existUser(string $username){
+    public function existUser(string $username)
+    {
         $sql="select * from user where username=:username";
         $query=self::$connection->prepare($sql);
-        $query->bindValue(":username",$username);
+        $query->bindValue(":username", $username);
 
         $query->execute();
-        if($query->rowCount()==1){
+        if($query->rowCount()==1) {
             return $query->fetch(PDO::FETCH_ASSOC);
         }
     }
-    public static function  countuser(){
-         return "";
+    public static function countuser()
+    {
+        return "";
     }
 }

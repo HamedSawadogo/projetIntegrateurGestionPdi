@@ -1,12 +1,41 @@
 <?php
 require_once("src/interfaces/PdiMetierInterface.php");
 require_once("src/model/PDI.php");
-require_once ("AbstractManager.php");
+require_once ("src/managers/AbstractManager.php");
 require_once ("src/interfaces/ManagementInterface.php");
 
 
 class PdiManager extends AbstractManager implements ManagementInterface, PdiMetierInterface
 {
+    /**
+     * @param int $id
+     * @param string $subsistance
+     * @return void
+     * ajouter un moyen de subsistance a un PDI
+     */
+    public  function  addMoyenSubsistance(int $id,string $subsistance):void{
+        /**
+         * convertir en majiscule le moyen de subsistance
+         */
+        $subsistance=strtoupper($subsistance);
+        /**
+         * rechercher son identifiant
+         */
+        $spubSql="select id_sub  from subsistance where UPPER(libele) =?";
+        $querySub=$this->connection->prepare($spubSql);
+        $querySub->execute([$subsistance]);
+        $idSub=$querySub->fetch();
+        $idSub=(int)$idSub['id_sub'];
+
+        /**
+         * inserer l'id du PDI et de la subsistance dans la table de jointure
+         * (subsistance_pdi)
+         */
+        $sql="insert into subsistance_pdi(id_pdi,id_sub) values(?,?)";
+        $query=$this->connection->prepare($sql);
+        $query->execute(array($id,$idSub));
+
+    }
     //afficher le nombre de Pdi Par region
     public function afficherPdiByRegions(): array
     {
@@ -99,8 +128,6 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
      */
     public function addEntity($pdi): void
     {
-        /**$sql="INSERT INTO pdi(activite, date_naiss, email,lieu_origine,localisation,nationalite,nom, prenom, sexe,telephone)
-         * VALUES (?,?,?,?,?,?,?,?,?,?)";**/
         $sql = "insert into pdi(nom,prenom,lieu_origine,sexe,telephone,email,
       localisation,nationalite,date_naiss,activite) 
      values (?,?,?,?,?,?,?,?,?,?)";

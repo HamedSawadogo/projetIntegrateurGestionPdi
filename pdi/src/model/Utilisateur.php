@@ -1,15 +1,16 @@
 <?php
-require_once ("src/interfaces/UserMetierInterface.php");
-require_once ("src/db/Connection.php");
+
+require_once("src/interfaces/UserMetierInterface.php");
+require_once("src/db/Connection.php");
 
 /**
  * hacher le mot de passe de l'utilisateur
  */
 abstract class Utilisateur
 {
-  protected string  $username;
-  protected string  $password;
-  protected string  $type;
+    protected string  $username;
+    protected string  $password;
+    protected string  $type;
     /**
      * @param string $username
      * @param string $password
@@ -19,17 +20,19 @@ abstract class Utilisateur
         $this->username = $username;
         $this->password = $password;
     }
-    public  abstract  function getUserType():string;
+    abstract public function getUserType(): string;
 
     /**
      * @return string
      * crypter le mot de passe de l'utilisateur
      */
-    public  function  hashPassword():string{
-        return hash("sha256",$this->password);
+    public function hashPassword(): string
+    {
+        return hash("sha256", $this->password);
     }
-    public  function  checkPassword():bool{
-        if(strlen($this->password)>5){
+    public function checkPassword(): bool
+    {
+        if(strlen($this->password)>5) {
             return  true;
         }
         return  false;

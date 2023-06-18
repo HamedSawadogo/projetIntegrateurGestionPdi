@@ -217,3 +217,11 @@ table.table .avatar {
 .modal form label {
     font-weight: normal;
 }
+
+/**
+
+ */
+#user{
+    position: absolute;
+    right: 0;
+}

@@ -8,16 +8,16 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
    <title>connection</title>
 </head>
+
 <body>
    <div class="container w-25 mt-4 p-2" style="border:1px solid #333">
       <h3>CONNECTION</h3>
-
       <?php  if(isset($_GET['mess']) and $_GET['mess']=="err") :?>
       <div class="alert alert-danger" role="alert">
          login ou mot de passe incorect!
       </div>
       <?php endif;?>
-      <form method="POST" action="../../indexTest.php?action=post">
+      <form method="POST" action="traitement/traitement.php">
          <!-- utilisateur -->
          <div class="form-group">
             <label for="username">utilisateur</label>

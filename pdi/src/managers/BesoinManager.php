@@ -24,7 +24,7 @@ class BesoinManager  extends  AbstractManager
             var_dump($besoinId);
             $sqlbesoin = "insert into besoin_pdi(id_besoin,id_pdi)
            values(?,?)";
-            $besoinQuery = $this->connection->prepare($sqlbesoin);
+             $besoinQuery = $this->connection->prepare($sqlbesoin);
             $besoinQuery->bindParam(1, $besoinId);
             $besoinQuery->bindParam(2, $pdiId);
             $besoinQuery->execute();
@@ -45,7 +45,6 @@ class BesoinManager  extends  AbstractManager
         $query->execute();
         return $query->fetch();
     }
-
     /**
      * @return array
      * envoyer la liste des bésoins
