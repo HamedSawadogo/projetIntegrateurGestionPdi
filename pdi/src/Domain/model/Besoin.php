@@ -1,15 +1,17 @@
 <?php
 
+namespace Domain\model;
 class Besoin
 {
-   private string  $besoin;
-   private int $id;
-   private  int $idPdi;
+    private string $besoin;
+    private int $id;
+    private int $idPdi;
 
-   public  function  __construct(string  $besoin)
-   {
-       $this->besoin=$besoin;
-   }
+    public function __construct(string $besoin)
+    {
+        $this->besoin = $besoin;
+    }
+
     /**
      * @return string
      */

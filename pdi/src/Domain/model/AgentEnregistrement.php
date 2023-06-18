@@ -1,25 +1,32 @@
 <?php
 
-require_once ("src/model/Utilisateur.php");
-require_once ("src/interfaces/AgentEnregistrementInterface.php");
-require_once ("src/managers/PdiManager.php");
+namespace Domain\model;
+
+use AgentEnregistrementInterface;
+use Domain\managers\PdiManager;
+
+require_once("src/model/Utilisateur.php");
+require_once("src/interfaces/AgentEnregistrementInterface.php");
+require_once("src/managers/PdiManager.php");
 
 /**
  * agent d'enregistrement  qui enregistres les personnes  déplacés internes
  */
-class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInterface
+class AgentEnregistrement extends Utilisateur implements AgentEnregistrementInterface
 {
     private PdiManager $manager;
-    public  function  __construct(string $username, string $password)
+
+    public function __construct(string $username, string $password)
     {
         parent::__construct($username, $password);
-        $this->manager=new PdiManager();
+        $this->manager = new PdiManager();
     }
+
     /**
      * @return string
      * renvoyer le type d'utilisateur
      */
-    public function getUserType():string
+    public function getUserType(): string
     {
         return "AGENT_ENREGISTREMENT";
     }
@@ -51,7 +58,7 @@ class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInt
      */
     public function getPdiByID(int $id)
     {
-       return  $this->manager->getEntityByID($id);
+        return $this->manager->getEntityByID($id);
     }
 
     /**
@@ -60,6 +67,6 @@ class AgentEnregistrement extends Utilisateur implements  AgentEnregistrementInt
      */
     public function getPdiList(): array
     {
-        return  $this->manager->getEntityList();
+        return $this->manager->getEntityList();
     }
 }

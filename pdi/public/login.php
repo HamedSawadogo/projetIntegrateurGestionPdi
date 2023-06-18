@@ -17,7 +17,7 @@
          login ou mot de passe incorect!
       </div>
       <?php endif;?>
-      <form method="POST" action="traitement/traitement.php">
+      <form method="POST" action="../index.php?action=post">
          <!-- utilisateur -->
          <div class="form-group">
             <label for="username">utilisateur</label>

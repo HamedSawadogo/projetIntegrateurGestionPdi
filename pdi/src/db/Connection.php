@@ -1,6 +1,4 @@
 <?php
-
-namespace Domain\db;
 /**
  * onbtenir la connection a la base de donnée
  * patern SIngleton

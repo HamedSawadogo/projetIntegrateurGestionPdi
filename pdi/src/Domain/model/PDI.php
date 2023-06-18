@@ -1,17 +1,20 @@
 <?php
- 
-class PDI {
-   private int $id_pdi;
-   private string $nom;
-   private string $prenom;
-   private string  $date_nais;
-   private string $lieu_origine;
-   private string  $sexe;
-   private string $nationalite;
-   private string $activite;
-   private string $localisation;
-   private ?string $email;
-   private ?string $telephone;
+
+namespace Domain\model;
+
+class PDI
+{
+    private int $id_pdi;
+    private string $nom;
+    private string $prenom;
+    private string $date_nais;
+    private string $lieu_origine;
+    private string $sexe;
+    private string $nationalite;
+    private string $activite;
+    private string $localisation;
+    private ?string $email;
+    private ?string $telephone;
 
     /**
      * @param string $nom
@@ -112,6 +115,7 @@ class PDI {
     {
         return $this->lieu_origine;
     }
+
     /**
      * @param string $lieu_origine
      */
@@ -203,7 +207,7 @@ class PDI {
     /**
      * @return string
      */
-    public function getEmail():? string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -219,7 +223,7 @@ class PDI {
     /**
      * @return string
      */
-    public function getTelephone():? string
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }

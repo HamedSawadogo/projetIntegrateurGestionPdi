@@ -1,5 +1,7 @@
 <?php
-namespace Domain\managers\AbstractManager;
+namespace Domain\managers;
+use Connection;
+
 require_once ("src/db/Connection.php");
 
 abstract class AbstractManager

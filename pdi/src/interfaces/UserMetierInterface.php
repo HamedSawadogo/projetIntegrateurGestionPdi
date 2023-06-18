@@ -1,5 +1,7 @@
 <?php
 
+use Domain\model\Utilisateur;
+
 interface UserMetierInterface
 {
     public  function  addUser(Utilisateur $utilisateur);

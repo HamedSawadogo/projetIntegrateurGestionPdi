@@ -1,5 +1,6 @@
 <?php
 spl_autoload_register(function ($className){
-    $className=str_replace("\\","/",$className);
-    require_once ("src/managers/$className.php");
+    $path=str_replace("\\","/",$className).".php";
+    var_dump("src/".$path);
+    require_once ("src/".$path);
 });

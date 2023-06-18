@@ -1,37 +1,45 @@
 <?php
 
-require_once("src/model/Utilisateur.php");
+namespace Domain\model;
+
+use AdminInterfaceMetier;
+use Connection;
+
 require_once("src/interfaces/AdminInterfaceMetier.php");
 require_once("src/db/Connection.php");
 
 class Admin implements AdminInterfaceMetier
 {
-    private PDO $connection;
+    private \PDO $connection;
+
     public function __construct()
     {
-        $connect=new Connection();
-        $connection=$connect->getConnection();
+        $connect = new Connection();
+        $this->connection = $connect->getConnection();
 
     }
+
     public function getUserType(): string
     {
         return "ADMIN";
     }
+
     /**
      * @param Utilisateur $pdi
      * @return void
      * ajouter un utilisateur dans la base de donnée
      */
-    public function addUser(Utilisateur $user): void
+    public function addUser($user): void
     {
-        $sql="insert into user(username,password,type) values (?,?,?)";
-        $query=$this->connection->prepare($sql);
+        $sql = "insert into user(username,password,type) values (?,?,?)";
+        $query = $this->connection->prepare($sql);
         $query->execute([
             $user->getUsername(),
             $this->hashPassword(),
             $user->getUserType()
         ]);
     }
+
     /**
      * @param int $userId
      * @return void
@@ -39,26 +47,28 @@ class Admin implements AdminInterfaceMetier
      */
     public function deleteUser(int $id): void
     {
-        $sql="delete from user where id=?";
-        $query=$this->connection->prepare($sql);
-        $query->bindParam(1, $id, PDO::PARAM_INT);
+        $sql = "delete from user where id=?";
+        $query = $this->connection->prepare($sql);
+        $query->bindParam(1, $id, \PDO::PARAM_INT);
         $query->execute();
     }
+
     /**
      * @return void
      * obtenir tout les utilisateurs dans la base de donnée
      */
     public function getUserList(): array
     {
-        $sql="select * from user";
-        $query=$this->connection->prepare($sql);
+        $sql = "select * from user";
+        $query = $this->connection->prepare($sql);
         $query->execute();
-        $usersList=[];
-        while ($data=$query->fetch()) {
-            $usersList[]=$data;
+        $usersList = [];
+        while ($data = $query->fetch()) {
+            $usersList[] = $data;
         }
         return $usersList;
     }
+
     /**
      * @param int $id
      * @return mixed
@@ -66,10 +76,10 @@ class Admin implements AdminInterfaceMetier
      */
     public function getUserById(int $id)
     {
-        $sql="select * from user where id=?";
-        $query=$this->connection->prepare($sql);
-        $query->bindParam(1, $id, PDO::PARAM_INT);
+        $sql = "select * from user where id=?";
+        $query = $this->connection->prepare($sql);
+        $query->bindParam(1, $id, \PDO::PARAM_INT);
         $query->execute();
-        return $query->fetch(PDO::FETCH_ASSOC);
+        return $query->fetch(\PDO::FETCH_ASSOC);
     }
 }

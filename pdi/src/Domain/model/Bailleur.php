@@ -1,18 +1,22 @@
 <?php
-require_once ("Adresse.php");
+
+namespace Domain\model;
+
+require_once("Adresse.php");
 
 class Bailleur
 {
     private string $nom;
-    private Adresse  $adresse;
-    private  string  $typeBailleur;
+    private Adresse $adresse;
+    private string $typeBailleur;
 
-    public  function  __construct(string $nom,string  $type, Adresse  $adresse)
+    public function __construct(string $nom, string $type, Adresse $adresse)
     {
-        $this->nom=$nom;
-        $this->adresse=$adresse;
-        $this->typeBailleur=$type;
+        $this->nom = $nom;
+        $this->adresse = $adresse;
+        $this->typeBailleur = $type;
     }
+
     /**
      * @return string
      */
@@ -20,6 +24,7 @@ class Bailleur
     {
         return $this->nom;
     }
+
     /**
      * @param string $nom
      */
@@ -59,7 +64,6 @@ class Bailleur
     {
         $this->typeBailleur = $typeBailleur;
     }
-
 
 
 }

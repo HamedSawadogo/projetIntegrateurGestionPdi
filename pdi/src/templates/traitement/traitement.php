@@ -1,6 +1,5 @@
 <?php
-
-require_once("../managers/ConnectionManager.php");
+use Domain\managers\ConnectionManager;
 
 try {
     if(isset($_GET['action'])&&$_GET['action']!="") {

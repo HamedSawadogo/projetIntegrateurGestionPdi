@@ -1,14 +1,16 @@
 <?php
 
+namespace Domain\model;
 class MoyenSubsistance
 {
     private int $id;
     private string $subsistance;
 
-    public  function  __construct($subsistance)
+    public function __construct($subsistance)
     {
-        $this->subsistance=$subsistance;
+        $this->subsistance = $subsistance;
     }
+
     /**
      * @return int
      */
@@ -40,7 +42,6 @@ class MoyenSubsistance
     {
         $this->subsistance = $subsistance;
     }
-
 
 
 }

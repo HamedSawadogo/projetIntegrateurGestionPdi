@@ -1,8 +1,7 @@
 <?php
-require_once("src/db/Connection.php");
-require_once ("AbstractManager.php");
+namespace Domain\managers;
 
-class BesoinManager  extends  AbstractManager
+class BesoinManager extends AbstractManager
 {
     /**
      * @param int $pdiId
@@ -16,20 +15,21 @@ class BesoinManager  extends  AbstractManager
         $query = $this->connection->prepare($sql);
         $query->bindParam(1, $besoin, PDO::PARAM_STR);
         $query->execute();
-        $besoinGeted=$query->fetch();
-        $besoinId=(int)$besoinGeted['id'];
-        $result=$query->execute();
+        $besoinGeted = $query->fetch();
+        $besoinId = (int)$besoinGeted['id'];
+        $result = $query->execute();
 
         if ($result) {
             var_dump($besoinId);
             $sqlbesoin = "insert into besoin_pdi(id_besoin,id_pdi)
            values(?,?)";
-             $besoinQuery = $this->connection->prepare($sqlbesoin);
+            $besoinQuery = $this->connection->prepare($sqlbesoin);
             $besoinQuery->bindParam(1, $besoinId);
             $besoinQuery->bindParam(2, $pdiId);
             $besoinQuery->execute();
         }
     }
+
     /**
      * @param string $besoinLibele
      * @return int
@@ -45,15 +45,16 @@ class BesoinManager  extends  AbstractManager
         $query->execute();
         return $query->fetch();
     }
+
     /**
      * @return array
      * envoyer la liste des bésoins
      */
     public function getEntityList(): array
     {
-        $sql="select * from besoin";
-        $query=$this->connection->prepare($sql);
+        $sql = "select * from besoin";
+        $query = $this->connection->prepare($sql);
         $query->execute();
-        return  $query->fetchAll();
+        return $query->fetchAll();
     }
 }

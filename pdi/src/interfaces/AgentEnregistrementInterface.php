@@ -1,4 +1,7 @@
 <?php
+
+use Domain\model\PDI;
+
 require_once ("src/model/PDI.php");
 
 interface AgentEnregistrementInterface

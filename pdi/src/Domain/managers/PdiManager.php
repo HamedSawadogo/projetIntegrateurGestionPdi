@@ -1,9 +1,15 @@
 <?php
-require_once("src/interfaces/PdiMetierInterface.php");
-require_once("src/model/PDI.php");
-require_once ("src/managers/AbstractManager.php");
-require_once ("src/interfaces/ManagementInterface.php");
+declare(strict_types=1);
+namespace Domain\managers;
 
+use Domain\model\PDI;
+use ManagementInterface;
+use PdiMetierInterface;
+
+require_once ("src/Domain/model/PDI.php");
+require_once("src/interfaces/PdiMetierInterface.php");
+require_once("src/interfaces/ManagementInterface.php");
+require_once ("src/Domain/managers/AbstractManager.php");
 
 class PdiManager extends AbstractManager implements ManagementInterface, PdiMetierInterface
 {
@@ -13,29 +19,31 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
      * @return void
      * ajouter un moyen de subsistance a un PDI
      */
-    public  function  addMoyenSubsistance(int $id,string $subsistance):void{
+    public function addMoyenSubsistance(int $id, string $subsistance): void
+    {
         /**
          * convertir en majiscule le moyen de subsistance
          */
-        $subsistance=strtoupper($subsistance);
+        $subsistance = strtoupper($subsistance);
         /**
          * rechercher son identifiant
          */
-        $spubSql="select id_sub  from subsistance where UPPER(libele) =?";
-        $querySub=$this->connection->prepare($spubSql);
+        $spubSql = "select id_sub  from subsistance where UPPER(libele) =?";
+        $querySub = $this->connection->prepare($spubSql);
         $querySub->execute([$subsistance]);
-        $idSub=$querySub->fetch();
-        $idSub=(int)$idSub['id_sub'];
+        $idSub = $querySub->fetch();
+        $idSub = (int)$idSub['id_sub'];
 
         /**
          * inserer l'id du PDI et de la subsistance dans la table de jointure
          * (subsistance_pdi)
          */
-        $sql="insert into subsistance_pdi(id_pdi,id_sub) values(?,?)";
-        $query=$this->connection->prepare($sql);
-        $query->execute(array($id,$idSub));
+        $sql = "insert into subsistance_pdi(id_pdi,id_sub) values(?,?)";
+        $query = $this->connection->prepare($sql);
+        $query->execute(array($id, $idSub));
 
     }
+
     //afficher le nombre de Pdi Par region
     public function afficherPdiByRegions(): array
     {
@@ -53,6 +61,7 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
         }
         return $dataArray;
     }
+
     /**
      * @param string $origine
      * @return mixed
@@ -64,10 +73,11 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
         $origine = strtoupper($origine);
         $sql = "select count(*) as nombrePdi from pdi where upper(lieu_origine)=:lieu_origine";
         $query = $this->connection->prepare($sql);
-        $query->bindParam(":lieu_origine", $origine, PDO::PARAM_STR);
+        $query->bindParam(":lieu_origine", $origine);
         $query->execute();
         return $query->fetch();
     }
+
     /**
      * afficher la liste des personnes déplacés Internes Femmes
      * @return int
@@ -108,6 +118,7 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
         $res = $query->fetch();
         return $res['nombre_personnes_mineures'];
     }
+
     /**
      * @return int
      * afficher le nombre total de PDI enregistrés dans la base de donnée
@@ -122,29 +133,30 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
     }
 
     /**
-     * @param $pdi
+     * @param $entity
      * @return void
      * ajouter un PDI
      */
-    public function addEntity($pdi): void
+    public function addEntity($entity): void
     {
         $sql = "insert into pdi(nom,prenom,lieu_origine,sexe,telephone,email,
       localisation,nationalite,date_naiss,activite) 
      values (?,?,?,?,?,?,?,?,?,?)";
         $query = $this->connection->prepare($sql);
         $query->execute([
-            $pdi->getNom(),
-            $pdi->getPrenom(),
-            $pdi->getLieuOrigine(),
-            $pdi->getSexe(),
-            $pdi->getTelephone(),
-            $pdi->getEmail(),
-            $pdi->getLocalisation(),
-            $pdi->getNationalite(),
-            $pdi->getDateNais(),
-            $pdi->getActivite()
+            $entity->getNom(),
+            $entity->getPrenom(),
+            $entity->getLieuOrigine(),
+            $entity->getSexe(),
+            $entity->getTelephone(),
+            $entity->getEmail(),
+            $entity->getLocalisation(),
+            $entity->getNationalite(),
+            $entity->getDateNais(),
+            $entity->getActivite()
         ]);
     }
+
     /**
      * @param int $id
      * @return void
@@ -157,6 +169,7 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
         $query->bindParam(":id_pdi", $id);
         $query->execute();
     }
+
     /**
      * @param int $id
      * @return mixed
@@ -166,9 +179,9 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
     {
         $sql = "select * from pdi where id_pdi=?";
         $query = $this->connection->prepare($sql);
-        $query->bindParam(1, $id, PDO::PARAM_INT);
+        $query->bindParam(1, $id, \PDO::PARAM_INT);
         $query->execute();
-        return $query->fetch(PDO::FETCH_ASSOC);
+        return $query->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -180,10 +193,10 @@ class PdiManager extends AbstractManager implements ManagementInterface, PdiMeti
         $sql = "select * from pdi";
         $query = $this->connection->prepare($sql);
         $query->execute();
-        $pdiObjList=[];
+        $pdiObjList = [];
 
-        while ($pdi=$query->fetch()) {
-            $pdiObjList[]=new PDI(
+        while ($pdi = $query->fetch()) {
+            $pdiObjList[] = new PDI(
                 $pdi['nom'],
                 $pdi['prenom'],
                 $pdi['date_naiss'],

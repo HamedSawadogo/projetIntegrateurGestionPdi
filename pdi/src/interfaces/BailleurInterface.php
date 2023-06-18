@@ -1,5 +1,7 @@
 <?php
 
+use Domain\model\Bailleur;
+
 interface BailleurInterface
 {
   public  function  addBailleur(Bailleur $bailleur):void;

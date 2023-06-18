@@ -1,31 +1,15 @@
 <?php
 
-require_once("src/managers/PdiManager.php");
-require_once("src/managers/SubsistanceManager.php");
-require_once("src/managers/BesoinManager.php");
-require_once("src/model/Admin.php");
+use Domain\managers\BesoinManager;
+use Domain\managers\PdiManager;
+use Domain\model\Admin;
 
-$manager=new SubsistanceManager();
+require_once("src/Domain/managers/PdiManager.php");
+require_once("src/Domain/managers/BesoinManager.php");
+require_once("src/Domain/model/Admin.php");
+require_once("src/Domain/managers/ConnectionManager.php");
 
-$pdiManger=new PdiManager();
-$pdi=new  PDI(
-    "Pare",
-    "Ali",
-    "1999-03-23",
-    "KAYA",
-    "M",
-    "Burkinabé",
-    "Eleveur",
-    "BOBO",
-    "pare34@gmail.com",
-    "566373778"
-);
 
-var_dump($pdiManger->afficherPdiByRegions());
-var_dump($pdiManger->getPdisTotalHommmes());
-
-//$pdiManger->deleteEntityByID(15);
-$besoinManager=new BesoinManager();
-
-//var_dump($manager->getPdiSubistanceBySecteur());
-//$pdiManger->addEntity($pdi);
+$con=new \Domain\managers\ConnectionManager();
+$manager=new PdiManager();
+var_dump($manager);

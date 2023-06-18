@@ -1,31 +1,40 @@
 <?php
-require_once ("src/interfaces/ManagementInterface.php");
-require_once("src/interfaces/BailleurInterface.php");
-require_once ("AbstractManager.php");
 
-class BailleurManager extends AbstractManager  implements ManagementInterface
+namespace Domain\managers;
+
+use ManagementInterface;
+
+require_once("src/interfaces/ManagementInterface.php");
+require_once("src/interfaces/BailleurInterface.php");
+require_once("AbstractManager.php");
+
+class BailleurManager extends AbstractManager implements ManagementInterface
 {
 
-    public function __construct(){}
-
-    public  function  financerSecteur(int $id,string $secteur,$montant):void{
-        $sql="insert into financement(montant,bailleur_id) values (?,?)";
-        $query=$this->connection->prepare($sql);
-        $query->execute([$montant,$id]);
-        $financeid=$this->connection->lastInsertId();
-
-
-        $sqlSect="select id from secteur where secteur=?";
-        $querySect=$this->connection->prepare($sqlSect);
-        $querySect->execute([$secteur]);
-        $idSecteur=$this->connection->lastInsertId();
-
-
-        $sqlInsert="insert into secteur_finacment(secteur_id,financement_id)
-        values (?,?)";
-        $sqlFinace=$this->connection->prepare($sqlInsert);
-        $sqlFinace->execute([$idSecteur,$financeid]);
+    public function __construct()
+    {
     }
+
+    public function financerSecteur(int $id, string $secteur, $montant): void
+    {
+        $sql = "insert into financement(montant,bailleur_id) values (?,?)";
+        $query = $this->connection->prepare($sql);
+        $query->execute([$montant, $id]);
+        $financeid = $this->connection->lastInsertId();
+
+
+        $sqlSect = "select id from secteur where secteur=?";
+        $querySect = $this->connection->prepare($sqlSect);
+        $querySect->execute([$secteur]);
+        $idSecteur = $this->connection->lastInsertId();
+
+
+        $sqlInsert = "insert into secteur_finacment(secteur_id,financement_id)
+        values (?,?)";
+        $sqlFinace = $this->connection->prepare($sqlInsert);
+        $sqlFinace->execute([$idSecteur, $financeid]);
+    }
+
     public function addEntity($entity): void
     {
         /**
@@ -85,6 +94,6 @@ class BailleurManager extends AbstractManager  implements ManagementInterface
 
     public function getEntityList(): array
     {
-        return  [];
+        return [];
     }
 }
